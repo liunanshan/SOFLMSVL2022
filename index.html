@@ -1,885 +1,1334 @@
 
-<!DOCTYPE html><html lang="en">
-  <head><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Home - FAVPQC 2022</title>
+<!DOCTYPE html>
+<html lang="en">
 
-<meta name="description" content="International Workshop on Formal Analysis and Verification of Post-Quantum Cryptographic Protocols 2022
-">
-<link rel="canonical" href="/"><link rel="alternate" type="application/rss+xml" title="FAVPQC 2022" href="/feed.xml"><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.1/css/all.css" ><!-- start custom head snippets -->
 
-<!-- end custom head snippets -->
-<script>(function() {
-  window.isArray = function(val) {
-    return Object.prototype.toString.call(val) === '[object Array]';
-  };
-  window.isString = function(val) {
-    return typeof val === 'string';
-  };
+<head>
 
-  window.hasEvent = function(event) {
-    return 'on'.concat(event) in window.document;
-  };
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="Official website of the 26th International Conference on Engineering of Complex Computer Systems (ICECCS 2022) - 26 - 30 March 2022 - Hiroshima, Japan"
+          name="description">
+    <meta content="ICECCS 2022 organising committee" name="author">
+    <meta content="ICECCS 2022,ICECCS'22,26th ICECCS,Conference,Computer Science,Software Engineering,Formal Methods"
+          name="keywords">
 
-  window.isOverallScroller = function(node) {
-    return node === document.documentElement || node === document.body || node === window;
-  };
+    <title>ICECCS 2022</title>
 
-  window.isFormElement = function(node) {
-    var tagName = node.tagName;
-    return tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
-  };
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  window.pageLoad = (function () {
-    var loaded = false, cbs = [];
-    window.addEventListener('load', function () {
-      var i;
-      loaded = true;
-      if (cbs.length > 0) {
-        for (i = 0; i < cbs.length; i++) {
-          cbs[i]();
-        }
-      }
-    });
-    return {
-      then: function(cb) {
-        cb && (loaded ? cb() : (cbs.push(cb)));
-      }
-    };
-  })();
-})();
-(function() {
-  window.throttle = function(func, wait) {
-    var args, result, thisArg, timeoutId, lastCalled = 0;
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
 
-    function trailingCall() {
-      lastCalled = new Date;
-      timeoutId = null;
-      result = func.apply(thisArg, args);
-    }
-    return function() {
-      var now = new Date,
-        remaining = wait - (now - lastCalled);
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
-      args = arguments;
-      thisArg = this;
+    <!-- Custom styles for this template -->
+    <link href="css/creative.css" rel="stylesheet">
 
-      if (remaining <= 0) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-        lastCalled = now;
-        result = func.apply(thisArg, args);
-      } else if (!timeoutId) {
-        timeoutId = setTimeout(trailingCall, remaining);
-      }
-      return result;
-    };
-  };
-})();
-(function() {
-  var Set = (function() {
-    var add = function(item) {
-      var i, data = this._data;
-      for (i = 0; i < data.length; i++) {
-        if (data[i] === item) {
-          return;
-        }
-      }
-      this.size ++;
-      data.push(item);
-      return data;
-    };
 
-    var Set = function(data) {
-      this.size = 0;
-      this._data = [];
-      var i;
-      if (data.length > 0) {
-        for (i = 0; i < data.length; i++) {
-          add.call(this, data[i]);
-        }
-      }
-    };
-    Set.prototype.add = add;
-    Set.prototype.get = function(index) { return this._data[index]; };
-    Set.prototype.has = function(item) {
-      var i, data = this._data;
-      for (i = 0; i < data.length; i++) {
-        if (this.get(i) === item) {
-          return true;
-        }
-      }
-      return false;
-    };
-    Set.prototype.is = function(map) {
-      if (map._data.length !== this._data.length) { return false; }
-      var i, j, flag, tData = this._data, mData = map._data;
-      for (i = 0; i < tData.length; i++) {
-        for (flag = false, j = 0; j < mData.length; j++) {
-          if (tData[i] === mData[j]) {
-            flag = true;
-            break;
-          }
-        }
-        if (!flag) { return false; }
-      }
-      return true;
-    };
-    Set.prototype.values = function() {
-      return this._data;
-    };
-    return Set;
-  })();
-
-  window.Lazyload = (function(doc) {
-    var queue = {js: [], css: []}, sources = {js: {}, css: {}}, context = this;
-    var createNode = function(name, attrs) {
-      var node = doc.createElement(name), attr;
-      for (attr in attrs) {
-        if (attrs.hasOwnProperty(attr)) {
-          node.setAttribute(attr, attrs[attr]);
-        }
-      }
-      return node;
-    };
-    var end = function(type, url) {
-      var s, q, qi, cbs, i, j, cur, val, flag;
-      if (type === 'js' || type ==='css') {
-        s = sources[type], q = queue[type];
-        s[url] = true;
-        for (i = 0; i < q.length; i++) {
-          cur = q[i];
-          if (cur.urls.has(url)) {
-            qi = cur, val = qi.urls.values();
-            qi && (cbs = qi.callbacks);
-            for (flag = true, j = 0; j < val.length; j++) {
-              cur = val[j];
-              if (!s[cur]) {
-                flag = false;
-              }
-            }
-            if (flag && cbs && cbs.length > 0) {
-              for (j = 0; j < cbs.length; j++) {
-                cbs[j].call(context);
-              }
-              qi.load = true;
-            }
-          }
-        }
-      }
-    };
-    var load = function(type, urls, callback) {
-      var s, q, qi, node, i, cur,
-        _urls = typeof urls === 'string' ? new Set([urls]) : new Set(urls), val, url;
-      if (type === 'js' || type ==='css') {
-        s = sources[type], q = queue[type];
-        for (i = 0; i < q.length; i++) {
-          cur = q[i];
-          if (_urls.is(cur.urls)) {
-            qi = cur;
-            break;
-          }
-        }
-        val = _urls.values();
-        if (qi) {
-          callback && (qi.load || qi.callbacks.push(callback));
-          callback && (qi.load && callback());
-        } else {
-          q.push({
-            urls: _urls,
-            callbacks: callback ? [callback] : [],
-            load: false
-          });
-          for (i = 0; i < val.length; i++) {
-            node = null, url = val[i];
-            if (s[url] === undefined) {
-              (type === 'js' ) && (node = createNode('script', { src: url }));
-              (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
-              if (node) {
-                node.onload = (function(type, url) {
-                  return function() {
-                    end(type, url);
-                  };
-                })(type, url);
-                (doc.head || doc.body).appendChild(node);
-                s[url] = false;
-              }
-            }
-          }
-        }
-      }
-    };
-    return {
-      js: function(url, callback) {
-        load('js', url, callback);
-      },
-      css: function(url, callback) {
-        load('css', url, callback);
-      }
-    };
-  })(this.document);
-})();
-</script><script>
-  (function() {
-    var TEXT_VARIABLES = {
-      version: '2.2.6',
-      sources: {
-        font_awesome: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.1/css/all.css',
-        jquery: 'https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js',
-        leancloud_js_sdk: '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js',
-        chart: 'https://cdn.bootcss.com/Chart.js/2.7.2/Chart.bundle.min.js',
-        gitalk: {
-          js: 'https://cdn.bootcss.com/gitalk/1.2.2/gitalk.min.js',
-          css: 'https://cdn.bootcss.com/gitalk/1.2.2/gitalk.min.css'
-        },
-        valine: 'https://unpkg.com/valine/dist/Valine.min.js',
-        mathjax: 'https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML',
-        mermaid: 'https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js'
-      },
-      site: {
-        toc: {
-          selectors: 'h1,h2,h3'
-        }
-      },
-      paths: {
-        search_js: '/assets/search.js'
-      }
-    };
-    window.TEXT_VARIABLES = TEXT_VARIABLES;
-  })();
-</script>
 </head>
-  <body>
-    <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
 
-      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
-      <div class="header__title">
-        <div class="header__brand">
-          <!--<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="24px" height="24px" viewBox="0 0 24 24">
-<style type="text/css">
-	.st0{fill:#515151;}
-</style>
-<path class="st0" d="M1.7,22.3c5.7-5.7,11.3-5.7,17,0c3.3-3.3,3.5-5.3,0.8-6c2.7,0.7,3.5-1.1,2.3-5.6s-3.3-5.2-6.3-2.1
-	c3-3,2.3-5.2-2.1-6.3S7,1.8,7.7,4.6C7,1.8,5,2.1,1.7,5.3C7.3,11,7.3,16.7,1.7,22.3"/>
-</svg>
---><a title="International Workshop on Formal Analysis and Verification of Post-Quantum Cryptographic Protocols 2022
-" href="/">FAVPQC 2022</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item navigation__item--active"><a href="/">Home</a></li><li class="navigation__item"><a href="/program.html">Program</a></li><li class="navigation__item"><a href="/call-for-papers.html">Call For Papers</a></li><li class="navigation__item"><a href="/committee.html">Committee</a></li><li><button class="button"><i class="fas fa-search"></i></button></li></ul>
-      </nav></div>
-  </header>
-</div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
+<body id="page-top">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <!-- <a class="navbar-brand js-scroll-trigger" href="https://www.smart-dependable-sino-europe.institute"><img src="img/logos/iisg-logo-2.png" alt="Institute of Intelligent Software, Guangzhou" width="250"></a>
+        <a class="navbar-brand js-scroll-trigger" href="http://www.youthinktech.com"><img src="img/logos/youthink-logo.png" alt="Guangzhou CAS YouThink Technology Corp.,Ltd" width="90"></a>
+        <a class="navbar-brand js-scroll-trigger" href="http://www.zstu.edu.cn"><img src="img/logos/zstu-logo.png" alt="Zhejiang Sci-Tech University" width="120"></a> -->
+        <button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler navbar-toggler-right" data-target="#navbarResponsive" data-toggle="collapse"
+                type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <!--<li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#dates">Important Dates</a>
+                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#scope">Scope</a>
+                </li>
+                <!--<li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#accepted papers">Accepted Papers</a>
+                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#register">Registration</a>
+                </li>
+                <!--<li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#venue">Venue</a>
+                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#program">Program</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#workshops">Workshops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#tutorials">Tutorials</a>
+                </li>
+                <!--<li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#submission">Submit</a>
+                </li>
 
-              <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
-
-<!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/WebPage"><header style="display:none;"><h1>Home</h1></header><meta itemprop="headline" content="Home"><meta itemprop="author" content="Your Name"/><div class="js-article-content"><div class="layout--home"><div style="margin-top: 1.5em;">
-    <p style="font-size: 2em;">International Workshop on Formal Analysis and Verification of
-      Post-Quantum Cryptographic Protocols 2022</p>
-  </div>
-
-  <div style="margin-top: 1.2em;">
-    <p style="font-size: 1.2em;">
-      An <a href="http://maude.ucm.es/ICFEM22/" target="_blank">ICFEM 2022</a>
-      satellite workshop, Madrid, Spain, October 24, 2022</p>
-  </div>
-
-  <div style="margin-top: 1em;">
-    <p>It is known that the most popular public-key cryptosystems used today will become
-       insecure once sufficient strong quantum computers become available. 
-       To prepare for information security in the quantum computing era, 
-       post-quantum cryptosystems that are resistant to attacks from quantum computers 
-       have been built as replacements for the classical ones. 
-       Security verification of those post-quantum cryptographic protocols has got extensive attention 
-       from cryptography and security research groups in recent years.
-    </p>
-
-    <p>
-      Due to Covid-19, the workshop may be held in a hybrid style or completely virtual.
-    </p>
-  </div>
-
-
-  <!-- <div style="margin-top: 1.5em;"> -->
-    <!-- <p style="font-size: 1.5em;">Important dates</p>
-  </div> -->
-
-  <div class="article__content" itemprop="articleBody">
-    <h2 id="paper-submission">Important dates<a class="anchor d-print-none" aria-hidden="true"><i class="fas fa-anchor"></i></a></h2>
-    
-    <ul>
-      <li>Paper submission due: September 15, 2022 (AoE)</li>
-      <li>Notification: September 30, 2022</li>
-      <li>Camera-ready: October 14, 2022</li>
-    </ul>
-
-    <h2 id="paper-submission">News<a class="anchor d-print-none" aria-hidden="true"><i class="fas fa-anchor"></i></a></h2>
-    
-    <ul>
-      <li>2022/05/24: PC members are updated.</li>
-      <li>2022/04/21: Website is created.</li>
-    </ul>
-    
-  </div>
-
-</div>
-<script>/*(function () {
-
-})();*/
-</script>
-
-
-
-</div><section class="page__comments d-print-none"></section></article><!-- start custom main bottom snippet -->
-
-<!-- end custom main bottom snippet -->
-</div>
-            </div></div></div><div class="page__footer d-print-none">
-<footer class="footer py-4 js-page-footer">
-  <div class="main"><div itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Your Name"><meta itemprop="url" content="/"><meta itemprop="description" content="I am an amazing person."><div class="footer__author-links"><div class="author-links">
-  <ul class="menu menu--nowrap menu--inline"></ul>
-</div>
-</div>
-    </div><div class="site-info mt-2">
-      <div>© FAVPQC 2022,
-        Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/">Jekyll</a> & <a
-        title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme">TeXt Theme</a>.
-      </div>
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="https://conferences.computer.org/iceccs/2019/#!/toc/0">Proceedings</a>
+                </li>  -->
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#committee">Committee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#sponsors">Co-Sponsorships</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
-</footer>
-</div></div>
-    </div><script>(function() {
-  var SOURCES = window.TEXT_VARIABLES.sources;
-  window.Lazyload.js(SOURCES.jquery, function() {
-    var $body = $('body'), $window = $(window);
-    var $pageRoot = $('.js-page-root'), $pageMain = $('.js-page-main');
-    var activeCount = 0;
-    function modal(options) {
-      var $root = this, visible, onChange, hideWhenWindowScroll = false;
-      var scrollTop;
-      function setOptions(options) {
-        var _options = options || {};
-        visible = _options.initialVisible === undefined ? false : show;
-        onChange = _options.onChange;
-        hideWhenWindowScroll = _options.hideWhenWindowScroll;
-      }
-      function init() {
-        setState(visible);
-      }
-      function setState(isShow) {
-        if (isShow === visible) {
-          return;
-        }
-        visible = isShow;
-        if (visible) {
-          activeCount++;
-          scrollTop = $(window).scrollTop() || $pageMain.scrollTop();
-          $root.addClass('modal--show');
-          $pageMain.scrollTop(scrollTop);
-          activeCount === 1 && ($pageRoot.addClass('show-modal'), $body.addClass('of-hidden'));
-          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.on('scroll', hide);
-          $window.on('keyup', handleKeyup);
-        } else {
-          activeCount > 0 && activeCount--;
-          $root.removeClass('modal--show');
-          $window.scrollTop(scrollTop);
-          activeCount === 0 && ($pageRoot.removeClass('show-modal'), $body.removeClass('of-hidden'));
-          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.off('scroll', hide);
-          $window.off('keyup', handleKeyup);
-        }
-        onChange && onChange(visible);
-      }
-      function show() {
-        setState(true);
-      }
-      function hide() {
-        setState(false);
-      }
-      function handleKeyup(e) {
-        // Char Code: 27  ESC
-        if (e.which ===  27) {
-          hide();
-        }
-      }
-      setOptions(options);
-      init();
-      return {
-        show: show,
-        hide: hide,
-        $el: $root
-      };
-    }
-    $.fn.modal = modal;
-  });
-})();
-</script><div class="modal modal--overflow page__search-modal d-print-none js-page-search-modal"><script>
-(function () {
-  var SOURCES = window.TEXT_VARIABLES.sources;
-  window.Lazyload.js(SOURCES.jquery, function() {
-    // search panel
-    var search = (window.search || (window.search = {}));
-    var useDefaultSearchBox = window.useDefaultSearchBox === undefined ?
-      true : window.useDefaultSearchBox ;
+</nav>
 
-    var $searchModal = $('.js-page-search-modal');
-    var $searchToggle = $('.js-search-toggle');
-    var searchModal = $searchModal.modal({ onChange: handleModalChange, hideWhenWindowScroll: true });
-    var modalVisible = false;
-    search.searchModal = searchModal;
+<header class="masthead text-center text-white d-flex">
+    <div class="container my-auto">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <br><br>
+                <h1 class="text-uppercase">
+                    <strong>The 26<sup>th</sup> International Conference on Engineering of Complex Computer
+                        Systems</strong>
+                </h1>
+                <br>
+                <p><strong>26 - 30 March 2022 - Hiroshima City, Japan</strong></p>
+                <br><br>
+                <p style="color: white"><strong>Due to the latest situation of the COVID-19 pandemic and the latest
+                    policy of Japanese government on
+                    the access restrictions of international travelers to Japan, ICECCS 2022 will be held online
+                    completely.</strong></p>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="bg-primary" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mx-auto text-center">
+                <h2 class="section-heading text-white">Welcome to the website of the 26th International Conference on
+                    Engineering of Complex Computer Systems (ICECCS 2022)</h2>
+                <p class="text-faded mb-2">Since it was started in <b>Fort Lauderdale, Florida, USA</b> in 1995, ICECCS
+                    has provided a forum for both researchers and practitioners to discuss and exchange their experience
+                    and results in research on theories, methods, languages, and supporting tools for developing and
+                    maintaining complex computer systems.
+                </p>
+                <p class="text-faded mb-2">
+                    The goal of this conference is to bring together industrial, academic, and government experts, from
+                    a variety of user domains and software disciplines, to help advance the state of the art.
+                    Researchers, practitioners, tool developers and users are all welcome.
+                </p>
 
-    var $searchBox = null;
-    var $searchInput = null;
-    var $searchClear = null;
+                <p class="text-white mb-2">
+                    ICECCS is an <a href="http://portal.core.edu.au/conf-ranks/646/">A-ranked</a> international
+                    conference by the <a href="http://www.core.edu.au/">Computing Research and Education Association of
+                    Australasia (CORE)</a> 2018 ranking.
+                </p>
 
-    function getModalVisible() {
-      return modalVisible;
-    }
-    search.getModalVisible = getModalVisible;
+                <!-- <p class="text-faded mb-2">
+                    Download the PDF version of the CFP <a href="cfp.pdf">Here</a>.
+                </p> -->
 
-    function handleModalChange(visible) {
-      modalVisible = visible;
-      if (visible) {
-        search.onShow && search.onShow();
-        useDefaultSearchBox && $searchInput[0] && $searchInput[0].focus();
-      } else {
-        search.onShow && search.onHide();
-        useDefaultSearchBox && $searchInput[0] && $searchInput[0].blur();
-        setTimeout(function() {
-          useDefaultSearchBox && ($searchInput.val(''), $searchBox.removeClass('not-empty'));
-          search.clear && search.clear();
-          window.pageAsideAffix && window.pageAsideAffix.refresh();
-        }, 400);
-      }
-    }
+                <hr class="my-4">
+                <h3 class="mb-4 text-white">We look forward to your participation.</h3>
 
-    $searchToggle.on('click', function() {
-      modalVisible ? searchModal.hide() : searchModal.show();
-    });
-    // Char Code: 83  S, 191 /
-    $(window).on('keyup', function(e) {
-      if (!modalVisible && !window.isFormElement(e.target || e.srcElement) && (e.which === 83 || e.which === 191)) {
-        modalVisible || searchModal.show();
-      }
-    });
 
-    if (useDefaultSearchBox) {
-      $searchBox = $('.js-search-box');
-      $searchInput = $searchBox.children('input');
-      $searchClear = $searchBox.children('.js-icon-clear');
-      search.getSearchInput = function() {
-        return $searchInput.get(0);
-      };
-      search.getVal = function() {
-        return $searchInput.val();
-      };
-      search.setVal = function(val) {
-        $searchInput.val(val);
-      };
+                <!-- <p class="text-white mb-2"><strong>Important notice:</strong> Due to the uncertainty of COVID-19 situation, virtural presentation will be considered (with discounted registration fee) if physical presentation is not feasible at the time of the conference.</p>
 
-      $searchInput.on('focus', function() {
-        $(this).addClass('focus');
-      });
-      $searchInput.on('blur', function() {
-        $(this).removeClass('focus');
-      });
-      $searchInput.on('input', window.throttle(function() {
-        var val = $(this).val();
-        if (val === '' || typeof val !== 'string') {
-          search.clear && search.clear();
-        } else {
-          $searchBox.addClass('not-empty');
-          search.onInputNotEmpty && search.onInputNotEmpty(val);
-        }
-      }, 400));
-      $searchClear.on('click', function() {
-        $searchInput.val(''); $searchBox.removeClass('not-empty');
-        search.clear && search.clear();
-      });
-    }
-  });
-})();
-</script><div class="search search--dark">
-  <div class="main">
-    <div class="search__header">Search</div>
-    <div class="search-bar">
-      <div class="search-box js-search-box">
-        <div class="search-box__icon-search"><i class="fas fa-search"></i></div>
-        <input type="text" />
-        <div class="search-box__icon-clear js-icon-clear">
-          <a><i class="fas fa-times"></i></a>
+                <p class="text-white mb-2"><strong>Important notice:</strong> the ICECCS steering committee has decided to delay the conference to 4 ~ 6 March, 2021, and the meeting will be in a hybrid mode of physical meeting and virtual meeting.</p>-->
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="dates">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Important Dates</h2>
+                <p></p>
+                <p class="mb-2"><strike style='color:#ff0000'><span style='color:black'>Abstract Submissions Due: 1 October 2021<span></strike>
+                </p>
+                <p class="mb-2"><strike style='color:#ff0000'><span style='color:black'>Extended Full Paper Submissions Due: 15 October 2021 (strict)</br>
+                    (Full papers can be
+                    directly submitted even with no Abstract submission in advance)</strike></p>
+                <p class="mb-2"><strike style='color:#ff0000'><span style='color:black'>Acceptance/Rejection Notification: 20 December 2021</strike>
+                </p>
+                <p class="mb-2"><strike style='color:#ff0000'><span style='color:black'>Camera-ready Papers Due: 28 January 2022</strike></p>
+                <p class="mb-2"><strike style='color:#ff0000'><span style='color:black'>Workshop/Tutorial Proposals Due: 9 October 2021</strike>
+                </p>
+                <p class="mb-2">Conference date (updated): 26 - 30 March 2022</p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-dark text-white" id="scope">
+    <div class="container text-center">
+        <h2 class="mb-4">Scope and Topics</h2>
+        <p></p>
+        <p class="mb-2 text-white">Authors are invited to submit papers describing original, unpublished research
+            results, case studies and tools. Papers are solicited in all areas related to complex computer-based
+            systems, including the causes of complexity and means of avoiding, controlling, or coping with complexity.
+            Topic areas include, but are not limited to:</p>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <ul>
+                    <li>Requirements analysis and specification</li>
+                    <li>Verification and validation</li>
+                    <li>Reliability engineering and faults prediction</li>
+                    <li>Formal engineering methods</li>
+                    <li>SAT/SMT solvers for software analysis and testing</li>
+                    <li>Mode-driven development</li>
+                    <li>Security and privacy of complex systems</li>
+                    <li>Reverse engineering and refactoring</li>
+                    <li>Software architecture</li>
+                    <li>Big data management</li>
+                </ul>
+            </div>
+            <div class="col-lg-5 mx-auto">
+                <ul>
+
+                    <li>Intelligent software tools</li>
+                    <li>Ubiquitous computing, context awareness, sensor networks</li>
+                    <li>Agile methods</li>
+                    <li>Human-Machine Pair Programming</li>
+                    <li>Safety-critical and fault-tolerant architectures</li>
+                    <li>Adaptive, self-managing and multi-agent systems</li>
+                    <li>Cyber-physical systems and IoT</li>
+                    <li>Industrial case studies</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <p></p>
+        <p class="mb-2 text-white">
+            Different kinds of contributions are sought, including novel research, lessons learned, experience reports,
+            and discussions of practical problems faced by industry and user domains. The ultimate goal is to build a
+            rich and comprehensive conference program that can fit the interests and needs of different classes of
+            attendees: professionals, researchers, managers, and students. A program goal is to organize several
+            sessions that include both academic and industrial papers on a given topic and culminate panels to discuss
+            relationships between industrial and academic research.
+        </p>
+    </div>
+</section>
+
+<!--<section class="bg-primary" id="accepted papers">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mx-auto text-justify">
+                <br>
+                <h2 class="section-heading text-white text-center">Accepted Papers</h2>
+                <br>
+                <h4 class="mb-4 text-white text-center">Regular Papers</h4>
+                <ul>
+                    <li class="text-white mb-2">Jaime Arias, Łukasz Maśko, Wojciech Penczek, Laure Petrucci and Teofil
+                        Sidoruk. Minimal Schedule with Minimal Number of Agents in Attack-Defence Trees
+                    </li>
+                    <li class="text-white mb-2">Camille Coti, Laure Petrucci and Daniel Alberto Torres Gonzalez. A
+                        Formal Model for Fault Tolerant Parallel Matrix Factorization
+                    </li>
+                    <li class="text-white mb-2">Peter Riviere, Neeraj Singh and Yamine Ait Ameur. EB4EB: A Framework for
+                        Reflexive Event-B
+                    </li>
+                    <li class="text-white mb-2">Wenhui Zhang and Ya Gao. A Bounded Semantics for Improving the
+                        Efficiency of Bounded Model Checking
+                    </li>
+                    <li class="text-white mb-2">Matteo Basso, Filippo Schiavio, Andrea Rosà and Walter Binder.
+                        Optimizing Parallel Java Streams
+                    </li>
+                    <li class="text-white mb-2">Claudia Szabo and Sree Ram Boyapati. Self-adaptation in Microservice
+                        Architectures: A Case Study
+                    </li>
+                    <li class="text-white mb-2">Xinyue Li and Wu Chen. Multi-layer Event Analytic Method of Adaptive
+                        Software Orienting at Uncertain Environments
+                    </li>
+                    <li class="text-white mb-2">Eduardo Rosales, Andrea Rosà, Matteo Basso, Alex Villazón, Adriana
+                        Orellana, Ángel Zenteno, Jhon Rivero and Walter Binder. Characterizing Java Streams in the Wild
+                    </li>
+                    <li class="text-white mb-2">Penglong Chen, Zhen Li, Yu Wen and Lili Liu. Generating Adversarial
+                        Source Programs using Important Tokens-based Structural Transformations
+                    </li>
+                    <li class="text-white mb-2">Sami Evangelista, Laure Petrucci and Lars Kristensen. Distributed
+                        Explicit State Space Exploration with State Reconstruction for RDMA Networks
+                    </li>
+                    <li class="text-white mb-2">Yepeng Ding and Hiroyuki Sato. Formalism-Driven Development of
+                        Decentralized Systems
+                    </li>
+                    <li class="text-white mb-2">Ran Li, Huibiao Zhu and Richard Banach. Denotational and Algebraic
+                        Semantics for Cyber-physical Systems
+                    </li>
+                    <li class="text-white mb-2">Mufan Xiang, Yongjian Li, Sijun Tan, Yongxin Zhao and Yiwei Chi.
+                        Parameterized Design and Formal Verification of Multi-ported Memory
+                    </li>
+                    <li class="text-white mb-2">Jiaqi Yin and Huibiao Zhu. The Operational and Denotational Semantics of
+                        rMECal Calculus for Mobile Edge Computing
+                    </li>
+                    <li class="text-white mb-2">Cong Zhou and Li Kuang. Combining Global and Local Representations of
+                        Source Code for Method Naming
+                    </li>
+                </ul>
+                <hr class="my-4">
+                <h4 class="mb-4 text-white text-center">Short Papers</h4>
+                <ul>
+                    <li class="text-white mb-2">Enze Ma. DLGR: A Rule-Based Approach to Graph Replacement for Deep
+                        Learning
+                    </li>
+                    <li class="text-white mb-2">Meryem Afendi, Amel Mammar and Regine Laleau. A Tool-Supported Approach
+                        for Modeling and Verifying Hybrid Systems using Event-B and a Differential Equation Solver
+                    </li>
+                    <li class="text-white mb-2">Paul Perrotin, Nicolas Belloir, Salah Sadou, David Hairion and Antoine
+                        Beugnard. Hos-ML: Socio-Technical System ADL Dedicated to Human Vulnerability Identification
+                    </li>
+                    <li class="text-white mb-2">Guanhong Chen and Shuang Liu. Reducing Malware labeling Efforts
+                        ThroughEfficient Prototype Selection
+                    </li>
+                    <li class="text-white mb-2">Yulin Bao, Chenyi Zhang, Xilong Zhuo and Yongliang Wang. Parameter
+                        Sensitive Pointer Analysis for Java
+                    </li>
+                    <li class="text-white mb-2">Jing Chen, Chunyan Ma and Zheng Chang. Fault Localization and Test
+                        Oracle Generation Based on the Mutual Pattern of Discrete Path Variables
+                    </li>
+                    <li class="text-white mb-2">Zhe Hou, Qinyi Li, Ernest Foo, Jin Song Dong and Paulo de Souza. A
+                        Digital Twin Runtime Verification Framework for Protecting Satellites Systems from Cyber Attacks
+                    </li>
+                    <li class="text-white mb-2">Yanzhao Wang and Fei Xie. Extending Tensor Virtual Machine to Support
+                        Deep-Learning Accelerators with Convolution Cores
+                    </li>
+                    <li class="text-white mb-2">Lian Gu, Zihui Wang, Jiaxin Liu, Yating Zhang, Dong Yang and Wei Dong.
+                        Extension-Compression Learning: A deep learning code search method that simulates reading habits
+                    </li>
+                    <li class="text-white mb-2">Weilin Wu and Yixiang Chen. Risk Trustworthiness Classification Model
+                        for Intelligent Building Fires
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>-->
+
+
+<section id="register">
+    <div class="container text-center">
+        <div class="row">
+            <h2 class="section-heading mb-2 text-center w-100">Registration</h2>
+            <p></p>
+
+            <div class="col-lg-12 text-center">
+                <div class="col-lg-12 text-justify">
+                    <br>
+                    <b class="mb-2">Please contact Prof. Shaoying Liu by email at <a
+                            href="mailto:sliu@hiroshima-u.ac.jp">sliu@hiroshima-u.ac.jp</a> regarding any
+                        issues in relation to registration and payment.</b>
+                    <ul>
+                        <li>Each accepted paper for the main conference must have at least one author registered with
+                            the <strong>ICECCS 2022 main conference</strong> in the category of <strong>Author
+                                Registration (Online)</strong> by 21
+                            January 2022. Each accepted paper for the Workshop must have at least one author registered
+                            with the <strong>Workshop + Tutorials</strong> in the category of <strong>Author
+                                Registration
+                                (Online)</strong> by 10 Feb.
+                            2022. <strong>This policy applies to each accepted paper, NOT each author</strong>.
+                        </li>
+                        <li>The main conference fee covers an electronic copy of the proceedings and attendance to
+                            all conference sessions, workshop, and tutorials.
+                        </li>
+                        <li>The workshop + tutorials fee covers attendance to the workshop and all the tutorials.</li>
+                        <li>All the registrations and payments should be made using the online registration system. The
+                            online payment for the registration fee is supported by the PayPal system in which Credit
+                            card payment or PayPal account payment can be used.
+                        </li>
+                        <li>All the fees and payments are in Japanese Yen (JPY).</li>
+                        <li>Registration cancelation policy: Registration fees will be refunded only if the
+                            cancellation request is submitted in writing by email with a good reason and no later than
+                            10 March 2022. Cancellations will be subject to a cancellation fee to cover administrative
+                            charges. No refunds will be issued for cancellation requests received after 10 March 2022.
+                        </li>
+                    </ul>
+
+                </div>
+                <hr class="my-4">
+
+                <table class="table table-striped text-center">
+                    <thead>
+                    <tr>
+                        <td scope="col"></td>
+                        <td scope="col"><strong>Author Registration </br>(Online)</strong></br>Until 21 January 2022
+                            (main conference)</br> Until 10 February 2022 (Workshop + Tutorials)
+                        </td>
+                        <td scope="col"><strong>Early Registration</br> (Non-Author, Online)</strong></br>Before 10
+                            March 2022
+                        </td>
+                        <td scope="col"><strong>Late Registration </br>(Non-Author, Online)</strong></br>After 9 March
+                            2022
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">ICECCS 2022 main conference</th>
+                        <td>55,000 JPY</td>
+                        <td>20,000 JPY</td>
+                        <td>25,000 JPY</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Workshop + Tutorials</th>
+                        <td>30,000 JPY</td>
+                        <td>10,000 JPY</td>
+                        <td>15,000 JPY</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="col-lg-12 text-center">
+                    <div class="row">
+                        <div class="col-lg-6 mx-auto" style="text-align: right">
+                            <p><a class="btn btn-dark js-scroll-trigger" style="text-align: left"
+                                  href="https://form.jotform.com/213478644814059">Author Registration</a></p>
+                        </div>
+                        <div class="col-lg-6 mx-auto" style="text-align: left">
+                            <p><a class="btn btn-dark js-scroll-trigger" style="text-align: right"
+                                  href="https://form.jotform.com/213551178142451">Non-Author Registration</a></p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--   <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Student Early Registration </br>(until 22/09/2019)</th>
+                        <th scope="col">Early Registration </br>(until 22/09/2019)</th>
+                        <th scope="col">Student Late Registration </br>(after 22/09/2019)</th>
+                        <th scope="col">Late Registration </br>(after 22/09/2019)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">Price</th>
+                        <td>650 USD</td>
+                        <td>800 USD</td>
+                        <td>750 USD</td>
+                        <td>900 USD</td>
+                        </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="col-lg-12 text-center">
+                      <p class="mb-2">Note that authors' registration due date is <strong>08/09/2019</strong>.</p>
+                      <p class="mb-2">Discounted registration fee has been provided to the ICFEM 2019 delegates at US$700.</p>
+                      <br>
+                    <p><a class="btn btn-dark js-scroll-trigger" href="https://www.formal-analysis-registration.com">Register Now!</a></p>
+                  </div>-->
+
+            </div>
+            <!--<div class="row d-flex">
+               <div class="col-lg-6">
+                   <br><br>
+                   <form action="http://localhost:3000/" method="post" id="reg_form">
+                       <p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
+
+                       <div class="form-group row">
+                           <label for="first_name" class="col-sm-3 col-form-label">First Name <strong>*</strong></label>
+                           <div class="col-sm-9">
+                               <input type="text" class="form-control" id="first_name" name="first_name" required>
+                           </div>
+                       </div>
+
+                       <div class="form-group row">
+                           <label for="last_name" class="col-sm-3 col-form-label">Last Name <strong>*</strong></label>
+                           <div class="col-sm-9">
+                               <input type="text" class="form-control" id="last_name" name="last_name" required>
+                           </div>
+                       </div>
+
+                       <div class="form-group row">
+                           <label for="email" class="col-sm-3 col-form-label">Email <strong>*</strong></label>
+                           <div class="col-sm-9">
+                               <input type="email" class="form-control" id="email" name="email" required>
+                           </div>
+                       </div>
+                       <div class="form-group row">
+                           <label for="contact" class="col-sm-3 col-form-label">Contact <strong>*</strong></label>
+                           <div class="col-sm-9">
+                               <input type="tel" class="form-control" id="contact" name="contact" required>
+                           </div>
+                       </div>
+                       <div class="form-group row">
+                           <label for="affiliation" class="col-sm-3 col-form-label">Affiliation <strong>*</strong></label>
+                           <div class="col-sm-9">
+                               <input type="text" class="form-control" id="affiliation" name="affiliation" required>
+                           </div>
+                       </div>
+                       <div class="form-group row">
+                           <label for="address" class="col-sm-3 col-form-label">Address <strong>*</strong></label>
+                           <div class="col-sm-9">
+                               <input type="text" class="form-control" id="address" name="address" required>
+                           </div>
+                       </div>
+
+                       <div class="form-group row">
+                         <label for="paper" class="col-sm-3 col-form-label">Paper ID</label>
+                         <div class="col-sm-9">
+                             <input type="text" id="paper" class="form-control" name="paper">
+                         </div>
+                       </div>
+
+                       <button type="submit" class="btn btn-primary w-100" id="submit-button">Submit</button>
+                   </form>
+               </div>
+               <div class="col-lg-6">
+                   <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"
+                         class="d-flex align-items-center" style="justify-content: space-between; margin-top: 2rem;">
+                       <input type="hidden" name="cmd" value="_s-xclick">
+                       <input type="hidden" name="hosted_button_id" value="XTCY97DCPAEVL">
+
+                       <label>
+                           Select Payment
+                           <input type="hidden" name="on0" value="Select Payment">
+                           <select name="os0" id="payment-select">
+                               <option class="e-option" value="Regular (early)">Regular (early) $1,060.00 AUD
+                               </option>
+                               <option class="e-option" value="Student (early)">Student (early) $860.00 AUD</option>
+                               <option class="n-option" value="Regular">Regular $1,200.00 AUD</option>
+                               <option class="n-option" value="Student">Student $1,000.00 AUD</option>
+                           </select>
+                       </label>
+
+                       <input type="hidden" name="currency_code" value="AUD">
+                       <input type="image"
+                              style="display: block;"
+                              src="https://www.paypalobjects.com/en_GB/SG/i/btn/btn_paynowCC_LG.gif"
+                              border="0"
+                              name="submit"
+                              alt="PayPal – The safer, easier way to pay online!">
+                       <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1"
+                            height="1">
+                   </form>
+
+                   <br>
+
+                   <p class="mt-3">If you cannot use Paypal, please use bank transfer with the following details:</p>
+
+                   <p class="mt-3">Account Name: Semantic Engineering Pte. Ltd.<br>
+                     Account Number: 0209012840 (S$ account)<br>
+                     Bank: DBS Bank Ltd. (Bank code: 7171)<br>
+                     Branch: DBS Clementi (Branch code: 020)<br>
+                     Swift Code: DBSSSGSG<br>
+                     Bank Address: DBS Bank, 6 Shenton Way, DBS Building Tower One, Singapore 068809
+                   </p>
+
+
+                   <p class="mt-3">Please feel free to contact our organizer, if you encounter any registration/payment issues.</p>
+               </div>
+           </div>-->
+        </div>
+</section>
+
+<section class="bg-dark text-white" id="venue">
+    <div class="container text-center">
+        <h2 class="mb-4">Host City and Venue</h2>
+
+
+        <!--<p class="text-white mb-2"><strong>Important notice:</strong> Due to the uncertainty of COVID-19 situation,
+            virtural presentation will be considered (with discounted registration fee) if physical presentation is not
+            feasible at the time of the conference.</p>
+
+        <p class="mb-2 text-white">
+            Note: the location of ICECCS2019 has been changed to Nansha, Guangzhou, China.
+
+            Guangzhou is the third largest city in China and a thriving commercial centre. Its location on the Pearl
+            River and proximity to Hong Kong has made Guangzhou a strategic port for centuries. Glimpse old temples and
+            gleaming steel towers on an architectural tour. Visit one of four Chimelong theme parks for thrills and
+            chills. Once called Canton, Guangzhou is considered the home of traditional (read Cantonese) “Chinese food.”
+            Foodies will find more restaurants per capita here than anywhere else in China.
+        </p>-->
+
+        <p class="mb-2 text-white">Higashi-Senda Innovative Research Center,<br/>
+            Hiroshima University<br/>
+            Higashi-Sendamachi 1-1 89, Naka-ku,<br/>
+            Hiroshima 730-0053, Japan <!--Located at the new coastal city of Nansha,
+            Guangzhou. Nansha Grand Hotel is adjacent to the Nansha Port, a one-hour voyage to HongKong and Macau, and
+            only ten minutes’ drive away from the nearest Metro station. At this predominant location, it is the only
+            super deluxe five-star hotel by the sea in Guangzhou. The hotel is roughly 1 hour 25 min drive from the
+            Guangzhou Baiyun International Airport, and 50 min drive from the Shenzhen Bao'an International Airpot.
+            <br><strong>Address</strong>: No.1 2nd South Trade road, New Coastal City, Nansha Guangzhou.
+            <br><strong>Phone</strong>: +86 20 3930 8888-->
+        </p>
+
+
+        <img class="thumbnail" style="border-radius: 8px" src="img/cherry1.jpg" border=0>
+        <img class="thumbnail" style="border-radius: 8px" src="img/cherry2.jpg" border=0>
+        <img class="thumbnail" style="border-radius: 8px" src="img/cherry3.jpg" border=0>
+        <img class="thumbnail1" style="border-radius: 8px" src="img/scene1.jpg" border=0>
+        <img class="thumbnail1" style="border-radius: 8px" src="img/scene2.jpg" border=0>
+        <img class="thumbnail1" style="border-radius: 8px" src="img/scene3.jpg" border=0>
+        <img class="thumbnail1" style="border-radius: 8px" src="img/scene4.jpg" border=0>
+        <img class="thumbnail1" style="border-radius: 8px" src="img/scene5.jpg" border=0>
+        <img class="thumbnail1" style="border-radius: 8px" src="img/scene6.jpg" border=0>
+
+        <p style="text-align: center;">
+            <iframe frameborder="0" height="500" id="gmap_canvas"
+                    marginheight="0"
+                    marginwidth="0" scrolling="no"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d210549.93241803744!2d132.29687609941476!3d34.45614082500744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355a9908eef34fbb%3A0x7e4ce50cfc1f772!2sHiroshima!5e0!3m2!1sen!2sjp!4v1622469787403!5m2!1sen!2sjp"
+                    width="600"></iframe>
+        </p>
+
+
+        <p>More information soon.</p>
+
+        <!-- <hr class="my-4">
+
+         <h2 class="mb-4">Accommodation</h2>
+
+         <p class="mb-2 text-white">For accommodation, we recommend staying at the conference hotel. The conference hotel
+             has offered a discounted group rate for the ICECCS 2019 delegates during the conference period at CNY650 per
+             night (Deluxe Sea-view Room with Double Breakfast, subject to availability). Please follow the <a
+                     href="https://www.formal-analysis-registration.com/nansha-hotel-reservation-request/">reservation
+                 link</a> to make your booking.</p>
+
+         <p class="mb-2 text-white">Otherwise, there are various options nearby. For example, the <a
+                 href="https://zhongbang-international.guangzhoutophotels.com/en/">Guangzhou Zhongbang International
+             Hotel</a> offers affordable rooms within 25 min walking distance to the conference venue.</p>
+
+         <p><strong>Note that the hotel reservation webpage does NOT receive payments online. Delegates are expected to
+             make payment on-site upon arrival at the hotel.</strong></p>
+
+         <hr class="my-4">
+
+         <h2 class="mb-4">Transportation</h2>
+
+         <p class="mb-2 text-white">There are two options for travelling from the Guangzhou Baiyun international Airport:
+             (1) Airport Bus Station -- (AIRPORT EXPRESS Line 7-C) -> Jiaomen station -- (METRO Line 4) -> Nansha
+             Passenger Port Station. (2) Airport North Metro Station -- (METRO Line 3 North Extension) -- (METRO Line 3)
+             -- (METRO Line 8) -- (METRO Line 4) -> Nansha Passenger Port Station</p>
+
+         <p class="mb-2 text-white">From Shenzhen Bao'an International Airport: Shenzhen Airport Bus Station -- (BUSINESS
+             DEDICATED BUS, WeChat Booking Only) -> Nansha Passenger Station -- (BUS No.5 / No.3) -> Nansha Passenger
+             Port Station</p>
+
+         <p class="mb-2 text-white">From Hong Kong International Airport (HKIA): <a
+                 href="https://www.hongkongairport.com/en/transport/mainland-connection/ferry-transfer.page">Skypier</a>
+             (ferry service) at HKIA -> Guangzhou Nansha (Nansha Passenger Port). The fare is about HKD300 and duration
+             of the trip is 70 minutes.</p>
+
+         <p class="mb-2 text-white">Additionally, the local organising team can help with arranging transportation
+             services between the Guangzhou/Shenzhen airports and the conference hotel. The costs of the one-way service
+             are US$85 for Car (exclusive) and US$30 for Mini-Bus (shared ride). Please follow the <a
+                     href="https://www.formal-analysis-registration.com/transportation-booking/">transportation
+                 reservation link</a> to request your booking.</p>-->
+
+
+        <!-- <p class="mb-2 text-white">10% off best flexible rate of the day is available if booked directly with the hotel. Guests will need to provide credit card details at time of booking to guarantee the reservation. The code for booking the accommodation rooms is "348481Monash". To make the booking please email the hotel's reservation department at h2086-re2@accor.com. Any cancellations within 30 days of arrival will incur 100% cancellation fees.</p> -->
+
+        <!-- <hr class="my-4">
+        <h2 class="mb-4">Room Booking Discounts</h2>
+
+        <p class="mb-2 text-white">We have negotiated with nearby hotels and obtained special room booking rates for our conference delegates.</p>
+
+        <p class="mb-2 text-white"><strong><a href="https://www.ihg.com/holidayinnexpress/hotels/us/en/hong-kong/hkgmk/hoteldetail">Holiday Inn Express Hong Kong Mongkok</a></strong> (16 min walk from conference venue) offers 15% off on Hotel Best Flexible Rate (BFR) between 9-14 Nov 2019. Booking method: email Tina.Li6@ihg.com (Tel: +852 2200 3824) with conference confirmation letter. Terms & Conditions: (1) No rooms are reserved for the offer and the above offer would be subject to hotel situation. (2) Hotel reserves the right at any time to amend the offer and the right of final decision in case of any disputes. (3) Booking terms & conditions please refer to confirmation letter upon booking (if any) is confirmed.</p>
+
+        <p class="mb-2 text-white"><strong><a href="http://www.metroparkhotelmongkok.com/">Metropark Hotel Mongkok</a></strong> (conference venue) offers special rates around 800HKD ~ 850HKD per night in the conference period, subject to availability. Booking method: email sales.hkmk@metroparkhotels.com (Tel: +852 2397 6683, +852 2397 9670) and state that you are a client of Dependable Intelligence and wish to book a room with Dependable Intelligence's corporate preferable room rates.</p> -->
+
+        <!-- <hr class="my-4">
+        <h2 class="mb-4">Visa Application</h2>
+
+        <p>Attendee who requires a visa to enter China, please complete the <a href="invitation-letter-china-visa.pdf">invitation letter template</a> and send it back to <a href="mailto:iceccs2019@easychair.org">us</a> for processing the official authorisation from the local committee. Note that we only issue visa invitation letters to the delegates who register and attend the conference.</p>
+
+        <p>Additional information on visa to China can be found <a href="http://au.china-embassy.org/eng/lsfw_12/vc/">here</a>.</p>
+
+        <hr class="my-4">
+        <h2 class="mb-4">Invitation Letter</h2>
+
+        <p>Attendees from mainland China can download the official stamped invitation letter in Chinese <a href="invitation-cn.pdf">here</a>.</p>-->
+
+    </div>
+</section>
+
+<section class="bg-primary text-white" id="program">
+    <div class="container text-center">
+        <h2 class="mb-4">Program</h2>
+        <p>Program has been updated (with <strong>Zoom URL</strong>).</p>
+
+        <p class="mb-2 text-white">
+          Download the program <a href="ICECCS2022WholeConferenceProgram_FinalforUse_WithZoomURL_videoPresentationLink.pdf"><strong>here</strong></a>.
+        </p>
+
+
+         <!--<hr class="my-4">
+
+        <h4 class="mb-4">Tutorials</h4>
+
+        <p class="mb-2 text-white">
+          <a href="https://protect-au.mimecast.com/s/APCUC81ZPohkV8yQtnuHoB?domain=pages.lip6.fr"><strong>Re-engineering Software Variability into Software Product Lines.</strong></a>
+        </p>
+
+        <p class="mb-2 text-white">
+          <a href="https://www.cs.auckland.ac.nz/~jingsun/b_repair/model-repair-tutorial.html"><strong>Microsoft Azure Cloud Services for Machine Learning-based Model Repair.</strong></a>
+        </p>
+
+        <p class="mb-2 text-white">
+          <a href="https://depintel.com/documentation/_build/html/get_started/welcome.html"><strong>Silas: Dependable and High Performance Machine Learning.</strong></a>
+        </p>
+
+        <hr class="my-4">
+
+        <h4 class="mb-4">Proceedings</h4>
+
+        <a class="nav-link js-scroll-trigger" href="ICECCS_2019_Accepted_Papers.txt">Accepted Papers.</a>
+
+        <a class="nav-link js-scroll-trigger" href="https://conferences.computer.org/iceccs/2019/#!/toc/0">Online proceedings can be found here.</a>
+
+
+         <p class="text-white mb-2">
+          Online proceedings can be found <a href="http://conferences.computer.org/iceccs/2018/#!/toc/0">here</a>.</p>-->
+
+        <hr class="my-4">
+
+        <h4 class="mb-4">Keynote Speakers</h4>
+        <div class="row">
+            <div class="col-lg-2 mx-auto text-center lign-middle" style="padding: 10px">
+                <img src="img/Jeffrey.jpg" width="300">
+            </div>
+            <div class="col-lg-6 mx-auto text-left">
+                <p class="mb-2 text-white"><a href="https://www.nist.gov/people/jeff-voas"><strong>Jeffrey Voas</strong></a><br/><strong>Fellow
+                    of IEEE, IET, and AAAS</strong><br/>
+
+                <p class="mb-2 text-white"><strong>Title:</strong> Software Fault Injection Testing</p>
+
+                <p class="mb-2 text-white"><strong>Abstract:</strong> Software reliability testing is traditionally
+                    based on the inputs that a system is <i>expected</i> to receive during operation along with the
+                    likelihood
+                    that they will occur. Inputs that are more likely are more likely are the <i>nominal</i> inputs.
+                    Inputs
+                    that are less likely to occur are the <i>off-nominal</i> inputs. For critical systems, both types of
+                    inputs
+                    should be used during testing. However, there is yet a 3<sup>rd</sup> type of input that should be
+                    considered
+                    during V&V, and that is <i>corrupted</i> inputs. It is well known that with software, input data can
+                    easily
+                    be corrupted. So, the question becomes: What will the software do when that happens? Answering this
+                    question is the role of <i>software fault injection testing</i>, and the focus of this talk.</p>
+
+                <strong>Bio:</strong> Jeffrey Voas is an author and innovator. He is currently a computer scientist
+                at the US National Institute of Standards and Technology (NIST) in Gaithersburg, MD. Before joining
+                NIST in 2009, Voas was an entrepreneur and co-founded Cigital that is now part of Synopsys (Nasdaq:
+                SNPS). He has served as
+                the IEEE Reliability Society President (2003-2005, 2009-2010, 2017-2018), and served as an IEEE
+                Director (2011-2012). Voas co-authored two John Wiley books (Software Assessment: Reliability,
+                Safety, and Testability [1995] and Software Fault Injection: Inoculating Software Against Errors
+                [1998] and was on the Editorial Advisory Board of IEEE Spectrum Magazine (2011-2015). Voas is
+                currently the Editor-in-Chief of IEEE Computer Magazine (2020-2022). Voas received his undergraduate
+                degree in computer engineering from Tulane University (1985) and received his M.S. and Ph.D. in
+                computer science from the College of William and Mary (1986, 1990 respectively). Voas is a Fellow of
+                the IEEE, member of IEEE Eta-Kappa Nu (IEEE Honor Society), Fellow of the Institution of Engineering
+                and Technology (IET), Fellow of the American Association for the Advancement of Science (AAAS), and
+                Life member and Fellow of the Washington Academy of Sciences. Voas is a member of ACM and an
+                Emeritus Life member of the College of William and Mary Graduate Studies Board. Voas received the
+                Gold Medal from the US Department of Commerce in 2014. </p>
+
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col-lg-2 mx-auto text-center lign-middle" style="padding: 10px">
+                <img src="img/Michael.jpg" width="260">
+            </div>
+            <div class="col-lg-6 mx-auto text-left">
+                <p class="mb-2 text-white"><a href="https://www.ecs.soton.ac.uk/people/mbutler"><strong>Michael
+                    Butler</strong></a> <br/><strong>Fellow of BCS</strong><br/>
+                <p class="mb-2 text-white"><strong>Title:</strong> Hierarchical analysis and verification for critical
+                    system design</p>
+
+                <p class="mb-2 text-white"><strong>Abstract:</strong> Safety and security are key considerations in the
+                    design of critical systems. Requirements analysis methods rely on the expertise and experience of
+                    human intervention to make critical judgements. While human judgement is essential to an analysis
+                    method, it is also valuable to ensure a degree of formality so that we reason about safety and
+                    security at early stages of analysis and design, rather than detect problems later. Influenced by
+                    ideas from STPA, this talk will present a hierarchical analysis process that aims to justify the
+                    lower-level of design and flow-down of derived critical requirements arising from safety hazards and
+                    security vulnerabilities identified at the higher-level design. At each level, we verify that the
+                    design achieves the safety/security requirements by backing the analysis with formal modelling and
+                    proof using Event-B refinement. The formal model helps to identify hazards/vulnerabilities arising
+                    from the design and how they relate to the safety accidents/security losses being considered at this
+                    level. We then re-apply the same process to each component of the design in a hierarchical manner.
+                    Thus, we use ideas from STPA, backed by Event-B models, to drive the design, replacing the system
+                    level requirements with component requirements. In doing so, we decompose critical requirements down
+                    to components, transforming them from abstract system level requirements, towards concrete solutions
+                    that we can implement correctly so that the hazards/vulnerabilities are eliminated.
+                    Acknowledgements: This research is a collaboration with Asieh Salehi Fathabadi, Colin Snook, Dana
+                    Dghaym, Thai Son Hoang, and Fahad Alotaibi.
+                </p>
+
+                <strong>Bio:</strong> Michael Butler is a Professor of Computer Science at the University of
+                Southampton, UK. He works in the area of mathematical methods for design and verification of safe
+                and secure software-based systems, specialising in model-based formal methods, in particular Event-B.
+                His research work encompasses applications, tools and methodology for formal methods. He has made
+                key theoretical and methodological contributions to the Event-B formal method that enable it to
+                scale to large complex systems. These contributions enable modular analysis in terms of how systems
+                models are structured and analysed as well as methods for development of domain-specific
+                mathematical theories that are reusable across multiple projects.</p>
+
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col-lg-2 mx-auto text-center lign-middle" style="padding: 10px">
+                <img src="img/Bojan.jpg" width="260">
+            </div>
+            <div class="col-lg-6 mx-auto text-left">
+                <p class="mb-2 text-white"><a href="https://cci.uncc.edu/directory/bojan-cukic"><strong>Bojan
+                    Cukic</strong></a><br/>
+                <p class="mb-2 text-white"><strong>Title:</strong> From Safe and Reliable to Accountable Software and
+                    Systems</p>
+
+                <p class="mb-2 text-white"><strong>Abstract:</strong> Emphasis on system safety and reliability
+                    assessment allowed us to place societal trust on mass-transportation and medical systems, energy,
+                    space, financial and military infrastructures, and many other critical domains. As the technology
+                    intrudes into all aspects of our lives, existing verification and validation approaches are not
+                    sufficient anymore. In addition to meeting safety, reliability, and security standards, we expect
+                    systems to protect our privacy, uphold equity, integrity and human rights, perform without biases,
+                    and meet other stated and unstated expectations. Further, some of the logic embedded in software may
+                    be the product of machine learning, making it unintuitive for humans to understand the rules it
+                    encodes, thereby difficult to assess. In this talk, we will discuss software accountability
+                    principles. Efforts to regulate software and services are increasing, with the goal of making
+                    organizations and individuals more accountable for its consequences. But what constitutes
+                    accountable software is not understood well. We will overview the outcomes of traditional software
+                    safety assessment processes and compare them with emerging verification needs. Examples from
+                    adaptive flight controls and airport passenger management will offer preliminary illustrations of
+                    the dimensions of software accountability assurance. Our talk will conclude by outlining
+                    opportunities for future research.</p>
+
+                <strong>Bio:</strong> Dr. Bojan Cukic is a Professor and Associate Dean for
+                Academic Programs and Student Success in the College of Computing and Informatics at the University
+                of North Carolina at Charlotte (UNCC). He previously served as the Chair of the Department of
+                Computer Science and the Interim Executive Director of the UNCC Data Science Initiative. Dr. Cukic’s
+                research interests include information assurance and biometrics, software engineering with emphasis
+                on verification and validation, and resilient computing. He received MS and PhD degrees in Computer
+                Science from the University of Houston, and holds an honorary doctorate from the University of
+                Rijeka, Croatia.<br/>
+                Dr. Cukic received a National Science Foundation Career award. His research was recognized with the
+                Tycho Brahe award from NASA Office of Safety and Mission Assurance. He often collaborates with
+                industry and has served as the director of the Center for Identification Technology Research
+                (CITeR), an NSF Industry University Cooperative Research Center. He co-founded a startup, NexID
+                Biometrics Inc., subsequently acquired by Precise Biometrics.</p>
+
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="bg-dark text-white" id="workshops">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading">Workshops</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <p>
+                    <a href="https://www.dccs2022.com">DCCS 2022: The 1st International Workshop on Dependable Computing
+                        for Complex Systems</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="tutorials">
+    <div class="container">
+        <div class="col-lg-12 text-center">
+            <h2 class="section-heading">Tutorials</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 mx-auto text-center lign-middle" style="padding: 10px">
+                <img src="img/Kishor S. Trivedi.jpg" width="290">
+            </div>
+            <div class="col-lg-6 mx-auto text-left">
+                <p class="mb-2"><a href="#"><strong>Kishor S. Trivedi</strong></a><br/><strong>Duke University,
+                    North Carolina, USA</strong><br/><strong>Bio:</strong>Kishor Trivedi is the Fitzgerald Hudson
+                    Professor in the Department of Electrical and Computer Engineering at Duke University, Durham,
+                    NC. He has a 1968 B.Tech. (EE) from IIT Mumbai and MS’72/PhD’74 (CS) from the University of
+                    Illinois at Urbana-Champaign. He has been on the Duke faculty since 1975. He is the author of a
+                    well-known text entitled, Probability and Statistics with Reliability, Queuing and Computer
+                    Science Applications, originally published by Prentice-Hall; a thoroughly revised second edition
+                    of this book has been published by John Wiley. The book is recently translated into Chinese. He
+                    has also published several other books: Performance and Reliability Analysis of Computer
+                    Systems, published by Kluwer Academic Publishers and Queueing Networks and Markov Chains, John
+                    Wiley. His latest book, Reliability and Availability Engineering is published by Cambridge
+                    University Press in 2017. He is a Life Fellow of the Institute of Electrical and Electronics
+                    Engineers and a Golden Core Member of IEEE Computer Society. He has published over 600 articles,
+                    has supervised 48 Ph.D. dissertations and his h-index is 107. He is the recipient of IEEE
+                    Computer Society’s Technical Achievement Award for his research on Software Aging and
+                    Rejuvenation and IEEE Reliability Society’s Life Time Achievement Award. He has worked
+                    closely with industry in carrying our reliability/availability analysis, providing short courses
+                    on reliability, availability, and in the development and dissemination of software packages such
+                    as HARP, SHARPE, SREPT and SPNP.</p>
+
+                <p class="mb-2"><strong>Title:</strong> Reliability and availability of hardware-software systems
+                </p>
+                <p class="mb-2"><strong>Abstract:</strong>High reliability and availability are requirements for
+                    most technical systems including computer and communication systems. Reliability and
+                    availability assurance methods based on probabilistic models is the topic addressed in this
+                    talk. Non-state-space solution methods are often used to solve models based on reliability block
+                    diagrams, fault trees and reliability graphs. Relatively efficient algorithms are known to
+                    handle systems with hundreds of components and have been implemented in many software packages.
+                    Nevertheless, many practical problems cannot be handled by such algorithms. Bounding algorithms
+                    are then used in such cases as was done for a major subsystem of Boeing 787. Non-state-space
+                    methods derive their efficiency from the independence assumption that is often violated in
+                    practice. State space methods based on Markov chains, stochastic Petri nets, semi-Markov and
+                    Markov regenerative processes can be used to model various kinds of dependencies among system
+                    components. Linux Operating System and WebSphere Application server are used as examples of
+                    Markov models. IBM research cloud is used as an example of stochastic Petri net model. However,
+                    the state space explosion of such models severely restricts the size of the problem that can be
+                    solved. Hierarchical and fixed-point iterative methods provide a scalable alternative that
+                    combines the strengths of state space and non-state-space methods and have been extensively used
+                    to solve real-life problems. Real-world examples of such multi-level models from IBM, Cisco and
+                    Sun Microsystems will be discussed. Hardware systems as well as software systems and their
+                    combinations will be addressed via these examples. Novel approaches to software fault tolerance
+                    will be discussed. </p>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col-lg-2 mx-auto text-center lign-middle" style="padding: 10px">
+                <img src="img/Kazu Okumoto.jpg" width="290">
+            </div>
+            <div class="col-lg-6 mx-auto text-left">
+                <p class="mb-2"><a href="kokumoto@sakurasoftsolutions.com"><strong>Kazu
+                    Okumoto</strong></a><br/><strong>Ph. D., CEO, Sakura Software Solutions (3S)
+                    LLC</strong><br/><strong>Bio:</strong>After retiring from Nokia Bell Labs in 2020 as a
+                    Distinguished Member of Technical Staff, Dr. Okumoto founded Sakura Software Solutions (3S),
+                    which offers an interactive, real-time, online service for evaluating and improving quality of
+                    software being developed. In collaboration with experts from industry and academia he has
+                    developed a new innovative tool, STAR, for software quality assurance.
+                    Kazu is a well-recognized pioneer in software reliability engineering. He invented a
+                    world-famous statistical model for software reliability (known as “Goel – Okumoto model”). His
+                    co-authored book on software reliability is a most frequently referenced book in this field. And
+                    he has an impressive list of book chapters, keynote addresses, and numerous technical papers to
+                    his credit.
+                    Since joining Bell Labs in 1980, Kazu worked on many exciting projects for (original) AT&T,
+                    Lucent, Alcatel Lucent, and Nokia. He successfully developed software design for reliability as
+                    a best practice within Nokia. He has 13 years of management experience, including Bell Labs
+                    Field Representative in Japan. He was an Assistant Professor at Rutgers University. He completed
+                    his Ph.D. (1979) and MS (1976) at Syracuse University, and BS (1974) at Hiroshima University.
+                </p>
+
+                <p class="mb-2"><strong>Title:</strong> Software Quality Assurance as a Service (STAR): A
+                    revolutionary Approach
+                </p>
+                <p class="mb-2"><strong>Abstract:</strong>In this tutorial we will introduce a real-time interactive
+                    cloud-based tool, STAR, which implements a revolutionary approach to zero-touch automation for
+                    defect prediction. It enables quick and easy decision making across the development cycle to
+                    ensure high quality software. Available in STAR, our dynamic tool allows you to see the
+                    real-time impact that multiple corrective actions have on software quality & delivery schedule.
+                    It really is the most straightforward representation of software quality assurance. It is now
+                    available for anybody anytime and anywhere. We will provide a live demonstration of STAR to
+                    highlight input data and several output views with state-of-the-art user interface and
+                    visualization techniques. From pioneering research in software systems reliability, data
+                    networking and reliable distributed computing, to creating fundamental breakthroughs in the
+                    understanding and automation of robust software delivery, we pushed the known limits of
+                    computing science and how to capitalize on these advances for practical technological
+                    innovations. We successfully integrated these innovations into software design for reliability
+                    as a best practice. </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="bg-primary" id="submission">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mx-auto text-center">
+                <!--<h2 class="section-heading text-white">Full Papers</h2>
+                <p class="text-white mb-2">
+                    Full papers are divided into two categories: Technical Papers and Experience Reports. The papers submitted to both categories will be reviewed by program committee members, and papers accepted in either category will be published in the conference proceedings. Technical papers should describe original research, and experience reports should present practical projects carried out in industry, and reflect on the lessons learnt from them.
+                </p>
+                <hr class="my-4">
+                <h2 class="section-heading text-white">Short Papers</h2>
+                <p class="text-white mb-2">
+                    Short paper submissions describe early-stage, ongoing or PhD research. All short papers will be reviewed by program committee members, and accepted short papers will be published in the conference proceedings.
+                </p>
+                <hr class="my-4">-->
+                <h2 class="section-heading text-white">Submission and Publication</h2>
+                <p class="text-white mb-2">
+                    Submission webpage: <a href="https://easychair.org/conferences/?conf=iceccs2022">EasyChair</a>.
+                </p>
+
+                <p class="text-white mb-2">Submissions to the conference must not have been published or be concurrently
+                    considered for publication elsewhere. All submissions will be judged on the basis of originality,
+                    contribution to the field, technical and presentation quality, and relevance to the conference. </p>
+                <p class="text-white mb-2">
+                    Submitted manuscripts should be in English and formatted in the style of the IEEE conference format.
+                    Regular papers should not exceed 10 pages, and short papers should not exceed 6 pages, including
+                    figures, references, and appendices. All submissions should be in PDF format. Submissions not
+                    adhering to the specified format and length may be rejected immediately, without review.
+                </p>
+
+                <p class="text-white mb-3">
+                    Please prepare your manuscripts in accordance with the (<a
+                        href="http://www.ieee.org/conferences_events/conferences/publishing/templates.html">CPS
+                    guidelines</a>). </p>
+                <!--<p class="text-white mb-3">
+                We invite all prospective authors to submit their manuscripts via the ICECCS'20 portal, hosted on  <a href="https://easychair.org/conferences/?conf=iceccs2020">EasyChair</a>.
+      <br><br><a class="btn btn-light btn-xl js-scroll-trigger" href="https://easychair.org/conferences/?conf=iceccs2020">Access submission portal</a></p>
+
+   <br><br>-->
+                <p class="text-faded mb-2">
+                    High quality papers will be selected for publication in the Special Section on Engineering of
+                    Complex Computer Systems in IEEE Transactions on Reliability. The details of the Special Section can
+                    be found in the webpage <a href="https://paris.utdallas.edu/TRel/TRel-ECCS/">https://paris.utdallas.edu/TRel/TRel-ECCS/</a>.
+                </p>
+                <!--<p class="text-faded mb-2">
+                    Copyright form for accepted papers will be available <a href="#">soon</a>.</p>
+                <p class="text-white mb-2">More information available soon.</p>-->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- <section id="workshop" class="bg-dark text-white">
+  <div class="container text-center">
+    <h2 class="mb-4">Call For Workshops And Tutorials</h2>
+    <p class="mb-2 text-white">
+      Besides the standard main conference track, ICECCS will host a number of workshops and tutorials related to the theme of the  conference. The goal of the workshops is to provide participants with a platform to present and discuss their novel ideas; the goal of the tutorials is to provide a platform to elaborate the theoretical and applicable aspects of their research.
+    </p>
+    <p class="mb-2 text-white">
+      Please write your proposals in English, and submit in PDF format via email to the ICECCS workshop/tutorial chair, Guangdong Bai (g.bai@griffith.edu.au).
+    </p>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading">Important Dates</h2>
+          <p class="mb-2">Submission of proposals: 20 June 2019 AOE</p>
+          <p class="mb-2">Notification: 1 July 2019 AOE</p>
         </div>
       </div>
-      <button class="button button--theme-dark button--pill search__cancel js-search-toggle">
-        Cancel</button>
-    </div>
-    <div class="search-result js-search-result"></div>
+      <p></p>
   </div>
-</div>
-<script>var SOURCES = window.TEXT_VARIABLES.sources;
-var PAHTS = window.TEXT_VARIABLES.paths;
-window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
-  var search = (window.search || (window.search = {}));
-  var searchData = window.TEXT_SEARCH_DATA || {};
-
-  function memorize(f) {
-    var cache = {};
-    return function () {
-      var key = Array.prototype.join.call(arguments, ',');
-      if (key in cache) return cache[key];
-      else return cache[key] = f.apply(this, arguments);
-    };
-  }
-
-  /// search
-  function searchByQuery(query) {
-    var i, j, key, keys, cur, _title, result = {};
-    keys = Object.keys(searchData);
-    for (i = 0; i < keys.length; i++) {
-      key = keys[i];
-      for (j = 0; j < searchData[key].length; j++) {
-        cur = searchData[key][j], _title = cur.title;
-        if ((result[key] === undefined || result[key] && result[key].length < 4 )
-          && _title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
-          if (result[key] === undefined) {
-            result[key] = [];
-          }
-          result[key].push(cur);
-        }
-      }
-    }
-    return result;
-  }
-
-  var renderHeader = memorize(function(header) {
-    return $('<p class="search-result__header">' + header + '</p>');
-  });
-
-  var renderItem = function(index, title, url) {
-    return $('<li class="search-result__item" data-index="' + index + '"><a class="button" href="' + url + '">' + title + '</a></li>');
-  };
-
-  function render(data) {
-    if (!data) { return null; }
-    var $root = $('<ul></ul>'), i, j, key, keys, cur, itemIndex = 0;
-    keys = Object.keys(data);
-    for (i = 0; i < keys.length; i++) {
-      key = keys[i];
-      $root.append(renderHeader(key));
-      for (j = 0; j < data[key].length; j++) {
-        cur = data[key][j];
-        $root.append(renderItem(itemIndex++, cur.title, cur.url));
-      }
-    }
-    return $root;
-  }
-
-  // search box
-  var $result = $('.js-search-result'), $resultItems;
-  var lastActiveIndex, activeIndex;
-
-  function clear() {
-    $result.html(null);
-    $resultItems = $('.search-result__item'); activeIndex = 0;
-  }
-  function onInputNotEmpty(val) {
-    $result.html(render(searchByQuery(val)));
-    $resultItems = $('.search-result__item'); activeIndex = 0;
-    $resultItems.eq(0).addClass('active');
-  }
-
-  search.clear = clear;
-  search.onInputNotEmpty = onInputNotEmpty;
-
-  function updateResultItems() {
-    lastActiveIndex >= 0 && $resultItems.eq(lastActiveIndex).removeClass('active');
-    activeIndex >= 0 && $resultItems.eq(activeIndex).addClass('active');
-  }
-
-  function moveActiveIndex(direction) {
-    var itemsCount = $resultItems ? $resultItems.length : 0;
-    if (itemsCount > 1) {
-      lastActiveIndex = activeIndex;
-      if (direction === 'up') {
-        activeIndex = (activeIndex - 1 + itemsCount) % itemsCount;
-      } else if (direction === 'down') {
-        activeIndex = (activeIndex + 1 + itemsCount) % itemsCount;
-      }
-      updateResultItems();
-    }
-  }
-
-  // Char Code: 13  Enter, 37  ⬅, 38  ⬆, 39  ➡, 40  ⬇
-  $(window).on('keyup', function(e) {
-    var modalVisible = search.getModalVisible && search.getModalVisible();
-    if (modalVisible) {
-      if (e.which === 38) {
-        modalVisible && moveActiveIndex('up');
-      } else if (e.which === 40) {
-        modalVisible && moveActiveIndex('down');
-      } else if (e.which === 13) {
-        modalVisible && $resultItems && activeIndex >= 0 && $resultItems.eq(activeIndex).children('a')[0].click();
-      }
-    }
-  });
-
-  $result.on('mouseover', '.search-result__item > a', function() {
-    var itemIndex = $(this).parent().data('index');
-    itemIndex >= 0 && (lastActiveIndex = activeIndex, activeIndex = itemIndex, updateResultItems());
-  });
-});
-</script>
-</div></div>
-
-
-<script>(function() {
-  var SOURCES = window.TEXT_VARIABLES.sources;
-  window.Lazyload.js(SOURCES.jquery, function() {
-    function scrollToAnchor(anchor, duration, callback) {
-      var $root = this;
-      $root.animate({ scrollTop: $(anchor).position().top }, duration, function() {
-        window.history.replaceState(null, '', window.location.href.split('#')[0] + anchor);
-        callback && callback();
-      });
-    }
-    $.fn.scrollToAnchor = scrollToAnchor;
-  });
-})();
-(function() {
-  var SOURCES = window.TEXT_VARIABLES.sources;
-  window.Lazyload.js(SOURCES.jquery, function() {
-    function affix(options) {
-      var $root = this, $window = $(window), $scrollTarget, $scroll,
-        offsetBottom = 0, scrollTarget = window, scroll = window.document, disabled = false, isOverallScroller = true,
-        rootTop, rootLeft, rootHeight, scrollBottom, rootBottomTop,
-        hasInit = false, curState;
-
-      function setOptions(options) {
-        var _options = options || {};
-        _options.offsetBottom && (offsetBottom = _options.offsetBottom);
-        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
-        _options.scroll && (scroll = _options.scroll);
-        _options.disabled !== undefined && (disabled = _options.disabled);
-        $scrollTarget = $(scrollTarget);
-        isOverallScroller = window.isOverallScroller($scrollTarget[0]);
-        $scroll = $(scroll);
-      }
-      function preCalc() {
-        top();
-        rootHeight = $root.outerHeight();
-        rootTop = $root.offset().top + (isOverallScroller ? 0 :  $scrollTarget.scrollTop());
-        rootLeft = $root.offset().left;
-      }
-      function calc(needPreCalc) {
-        needPreCalc && preCalc();
-        scrollBottom = $scroll.outerHeight() - offsetBottom - rootHeight;
-        rootBottomTop = scrollBottom - rootTop;
-      }
-      function top() {
-        if (curState !== 'top') {
-          $root.removeClass('fixed').css({
-            left: 0,
-            top: 0
-          });
-          curState = 'top';
-        }
-      }
-      function fixed() {
-        if (curState !== 'fixed') {
-          $root.addClass('fixed').css({
-            left: rootLeft + 'px',
-            top: 0
-          });
-          curState = 'fixed';
-        }
-      }
-      function bottom() {
-        if (curState !== 'bottom') {
-          $root.removeClass('fixed').css({
-            left: 0,
-            top: rootBottomTop + 'px'
-          });
-          curState = 'bottom';
-        }
-      }
-      function setState() {
-        var scrollTop = $scrollTarget.scrollTop();
-        if (scrollTop >= rootTop && scrollTop <= scrollBottom) {
-          fixed();
-        } else if (scrollTop < rootTop) {
-          top();
-        } else {
-          bottom();
-        }
-      }
-      function init() {
-        if(!hasInit) {
-          var interval, timeout;
-          calc(true); setState();
-          // run calc every 100 millisecond
-          interval = setInterval(function() {
-            calc();
-          }, 100);
-          timeout = setTimeout(function() {
-            clearInterval(interval);
-          }, 45000);
-          window.pageLoad.then(function() {
-            setTimeout(function() {
-              clearInterval(interval);
-              clearTimeout(timeout);
-            }, 3000);
-          });
-          $scrollTarget.on('scroll', function() {
-            disabled || setState();
-          });
-          $window.on('resize', function() {
-            disabled || (calc(true), setState());
-          });
-          hasInit = true;
-        }
-      }
-
-      setOptions(options);
-      if (!disabled) {
-        init();
-      }
-      $window.on('resize', window.throttle(function() {
-        init();
-      }, 200));
-      return {
-        setOptions: setOptions,
-        refresh: function() {
-          calc(true, { animation: false }); setState();
-        }
-      };
-    }
-    $.fn.affix = affix;
-  });
-})();
-(function() {
-  var SOURCES = window.TEXT_VARIABLES.sources;
-  window.Lazyload.js(SOURCES.jquery, function() {
-    function toc(options) {
-      var $root = this, $window = $(window), $scrollTarget, $scroller, $tocUl = $('<ul class="toc toc--ellipsis"></ul>'), $tocLi, $headings, $activeLast, $activeCur,
-        selectors = 'h1,h2,h3', container = 'body', scrollTarget = window, scroller = 'html, body', disabled = false,
-        headingsPos, scrolling = false, hasRendered = false, hasInit = false;
-
-      function setOptions(options) {
-        var _options = options || {};
-        _options.selectors && (selectors = _options.selectors);
-        _options.container && (container = _options.container);
-        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
-        _options.scroller && (scroller = _options.scroller);
-        _options.disabled !== undefined && (disabled = _options.disabled);
-        $headings = $(container).find(selectors).filter('[id]');
-        $scrollTarget = $(scrollTarget);
-        $scroller = $(scroller);
-      }
-      function calc() {
-        headingsPos = [];
-        $headings.each(function() {
-          headingsPos.push(Math.floor($(this).position().top));
-        });
-      }
-      function setState(element, disabled) {
-        var scrollTop = $scrollTarget.scrollTop(), i;
-        if (disabled || !headingsPos || headingsPos.length < 1) { return; }
-        if (element) {
-          $activeCur = element;
-        } else {
-          for (i = 0; i < headingsPos.length; i++) {
-            if (scrollTop >= headingsPos[i]) {
-              $activeCur = $tocLi.eq(i);
-            } else {
-              $activeCur || ($activeCur = $tocLi.eq(i));
-              break;
-            }
-          }
-        }
-        $activeLast && $activeLast.removeClass('active');
-        ($activeLast = $activeCur).addClass('active');
-      }
-      function render() {
-        if(!hasRendered) {
-          $root.append($tocUl);
-          $headings.each(function() {
-            var $this = $(this);
-            $tocUl.append($('<li></li>').addClass('toc-' + $this.prop('tagName').toLowerCase())
-              .append($('<a></a>').text($this.text()).attr('href', '#' + $this.prop('id'))));
-          });
-          $tocLi = $tocUl.children('li');
-          $tocUl.on('click', 'a', function(e) {
-            e.preventDefault();
-            var $this = $(this);
-            scrolling = true;
-            setState($this.parent());
-            $scroller.scrollToAnchor($this.attr('href'), 400, function() {
-              scrolling = false;
-            });
-          });
-        }
-        hasRendered = true;
-      }
-      function init() {
-        var interval, timeout;
-        if(!hasInit) {
-          render(); calc(); setState(null, scrolling);
-          // run calc every 100 millisecond
-          interval = setInterval(function() {
-            calc();
-          }, 100);
-          timeout = setTimeout(function() {
-            clearInterval(interval);
-          }, 45000);
-          window.pageLoad.then(function() {
-            setTimeout(function() {
-              clearInterval(interval);
-              clearTimeout(timeout);
-            }, 3000);
-          });
-          $scrollTarget.on('scroll', function() {
-            disabled || setState(null, scrolling);
-          });
-          $window.on('resize', window.throttle(function() {
-            if (!disabled) {
-              render(); calc(); setState(null, scrolling);
-            }
-          }, 100));
-        }
-        hasInit = true;
-      }
-
-      setOptions(options);
-      if (!disabled) {
-        init();
-      }
-      $window.on('resize', window.throttle(function() {
-        init();
-      }, 200));
-      return {
-        setOptions: setOptions
-      };
-    }
-    $.fn.toc = toc;
-  });
-})();
-/*(function () {
-
-})();*/
-</script>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+          Proposals should include:
+          <ul>
+              <li>Name, duration of the workshop/tutorial.</li>
+              <li>A short description of the workshop/tutorial.</li>
+              <li>Organizers: contact information and a brief biography (150 words).</li>
+              <li>(If applicable) A description of past versions of the workshop: organizers, dates, number of submissions and acceptance, attendance.</li>
+              <li>Expected attendance.</li>
+            </ul>
+      </div>
+      <div class="col-lg-5 mx-auto">
+          Organizer Roles:
+          <ul>
+              <li>Coordinating with the ICECCS workshop/tutorial chairs.</li>
+              <li>Maintaining web pages to be linked from the ICECCS website.</li>
+              <li>Organizing paper selection process.</li>
+              <li>Workshop/tutorial proceedings.</li>
+            </ul>
+      </div>
     </div>
-    <script>(function () {
-  var $root = document.getElementsByClassName('root')[0];
-  if (window.hasEvent('touchstart')) {
-    $root.dataset.isTouch = true;
-    document.addEventListener('touchstart', function(){}, false);
-  }
-})();
-</script>
-  </body>
-</html>
+  </div>
+</section>    -->
 
+<section id="committee">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h4 class="section-heading"><strong>General Chairs</strong></h4>
+
+                <div class="row" style="padding-left: 150px;padding-right:150px">
+                    <div class="col-lg-6 mx-auto text-center">
+                        <figure>
+                            <img src="img/ShaoyingLiu2021.1.jpg" width="211">
+                            <figcaption> Shaoying Liu, Hiroshima University, Japan<br/></figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-lg-6 mx-auto text-center">
+                        <figure>
+                            <img src="img/Tadashi Dohi.jpg" width="180">
+                            <figcaption> Tadashi Dohi, Hiroshima University, Japan<br/></figcaption>
+                        </figure>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h4 class="section-heading"><strong>Program Chairs</strong></h4>
+                <div class="row" style="padding-left: 150px;padding-right:150px">
+                    <div class="col-lg-6 mx-auto text-center">
+                        <figure>
+                            <img src="img/Hiroyuki Okamura.jpg" width="160">
+                            <figcaption> Hiroyuki Okamura, Hiroshima University, Japan<br/></figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-lg-6 mx-auto text-center">
+                        <figure>
+                            <img src="img/Fatiha Zaidi.jpg" width="180">
+                            <figcaption> Fatiha Zaidi, Paris-Saclay University, France<br/></figcaption>
+                        </figure>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row" style="padding-left: 150px;padding-right:150px">
+                    <div class="col-lg-6 mx-auto text-center">
+                        <h4 class="section-heading"><strong>Local Arrangement Chair</strong></h4>
+                        <figure>
+                            <img src="img/Jiandong Li.jpg" width="180">
+                            <figcaption> Jiandong Li, Hiroshima University, Japan<br/></figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-lg-6 mx-auto text-center">
+                        <h4 class="section-heading"><strong>Workshop/Tutorial Chair</strong></h4>
+                        <figure>
+                            <img src="img/Ai Liu.jpg" width="180">
+                            <figcaption> Ai Liu, Hiroshima University, Japan<br/></figcaption>
+                        </figure>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row" style="padding-left: 0px;  padding-right:0px">
+                    <div class="col-lg-4 mx-auto text-center">
+                        <h4 class="section-heading"><strong>Publicity Chair</strong></h4>
+                        <figure>
+                            <img src="img/Fumiko Nagoya.jpg" width="180">
+                            <figcaption> Fumiko Nagoya, Nihon University, Japan<br/></figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-lg-4 mx-auto text-center">
+                        <h4 class="section-heading"><strong>Publication Chair</strong></h4>
+                        <figure>
+                            <img src="img/Yuting Chen.jpg" width="180">
+                            <figcaption> Yuting Chen, Shanghai Jiaotong University, China<br/></figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-lg-4 mx-auto text-center">
+                        <h4 class="section-heading"><strong>Web Chair</strong></h4>
+                        <figure>
+                            <img src="img/Yujun Dai.jpg" width="160">
+                            <figcaption> Yujun Dai, Hiroshima University, Japan<br/></figcaption>
+                        </figure>
+                    </div>
+                </div>
+
+
+                <hr class="my-4">
+
+                <h4 class="section-heading"><strong>Program Committee Members</strong></h4>
+                <div class="row" style="padding-left: 0px;padding-right:0px">
+                    <div class="col-lg-6 mx-auto text-left">
+                        <p>Yamine Ait Ameur, IRIT/INPT-ENSEEIHT, France<br/>
+                            Cyrille Valentin Artho, KTH Royal Institute of Technology, Sweden<br/>
+                            Guangdong Bai,The University of Queensland, Australia<br/>
+                            Luciano Baresi, Politecnico di Milano, Italy<br/>
+                            Sergiy Bogomolov, Newcastle University, UK<br/>
+                            Hadrien Bride, The Australian National University, Australia<br/>
+                            Lei Bu, Nanjing University, China<br/>
+                            Sen Chen, Tianjin University, China<br/>
+                            Yuting Chen, Shangahia Jiaotong University, China<br/>
+                            Sylvain Conchon, Université Paris Saclay, France<br/>
+                            Lingling Fan, Nankai University, China<br/>
+                            Sebastien Gerard, CEA, LIST, France<br/>
+                            Hiroshi Hosobe, Hosei University, Japan<br/>
+                            Zhe Hou, Griffith University, Australia<br/>
+                            Fuyuki Ishikawa, NII, Japan<br/>
+                            Kenji Kono, Keio University, Japan<br/>
+                            Kenichi Kourai, Kyushu Institute of Technology, Japan<br/>
+                            Benson Lam, The Hang Seng University of Hong Kong, China<br/>
+                            Kung-Kiu Lau, The University of Manchester, UK<br/>
+                            Scott Uk-Lee, Hanyang University (ERICA Campus), Korea<br/>
+                            Shang-Wei Lin, Nanyang Technological University, Singapore<br/>
+                            Yun Lin, National University of Singapore, Singapore<br/>
+                            Shuang Liu, Tianjin University, China<br/>
+                            David Lo, Singapore Management University, Singapore<br/>
+                            Gerald Luettgen, University of Bamberg, Germany<br/>
+                            Tiziana Margaria, Lero, Ireland<br/>
+                            Dominiqu Mery, University of Lorraine, France<br/>
+
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6 mx-auto text-left">
+                        <p>Weikai Miao, East China Normal University, China<br/>
+                            Seyedali Mirjalili, Griffith University, Australia<br/>
+                            Fumiko Nagoya, Nihon University, Japan<br/>
+                            Shin Nakajima, NII, Japan<br/>
+                            Paolo Nesi, University of Florence, Italy<br/>
+                            Manuel Nunez, Universidad Computense de Madrid, Spain<br/>
+                            Richard Paige, McMaster University, Canada<br/>
+                            Jun Pang, University of Luxembourg, Luxembourg<br/>
+                            Chiu-Wing Sham, The University of Auckland, New Zealand<br/>
+                            Wuwei Shen, Western Michigan University, US<br/>
+                            Fu Song, ShanghaiTech University, China<br/>
+                            Jing Sun, The University of Auckland, New Zealand<br/>
+                            Jun Sun, Singapore Management University, Singapore<br/>
+                            Meng Sun, Peking University, China<br/>
+                            Safouan Taha, Central Supélec, France<br/>
+                            Tatsuhiro Tsuchiya, Osaka University, Japan<br/>
+                            Tullio Vardanega, University of Padua, Italy<br/>
+                            Hai H. Wang, University of Aston, UK<br/>
+                            Haoyu Wang, Beijing University of Posts and Telecommunications, China<br/>
+                            Shilin Wang, Shanghai Jiao Tong University, China<br/>
+                            Xi Wang, Shanghai University, China<br/>
+                            Hironori Washizaki, Waseda University, Japan<br/>
+                            Zhilin Wu, Institute of Software, Chinese Academy of Sciences, China<br/>
+                            Xiaofei Xie, Nanyang Technological University, Singapore<br/>
+                            Yinxing Xue, University of Science and Technology, China<br/>
+                            Chenyi Zhang, Jinan University,China<br/>
+                            Jianjun Zhao, Kyushu University, Japan<br/>
+                            Junjun Zheng, Ritsumeikan University, Japan
+                        </p>
+                    </div>
+                </div>
+                <hr class="my-4">
+
+                <h4 class="section-heading"><strong>Steering Committee</strong></h4>
+                <p>Jin Song Dong<br/>
+                    Mike Hinchy<br/>
+                    Xiaohong Li<br/>
+                    Shaoying Liu (Chair)<br/>
+                    Mauro Pezze<br/>
+                    Roy Sterritt<br/>
+                    Jing Sun<br/>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-dark text-white" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading">Contact Us</h2>
+                <p>Any inquiry about the conferrence can be sent to the Local Arrangement Chair</p>
+                <p>Jiandong Li.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+                <p>
+                    <a href="mailto:jiandong-li@hiroshima-u.ac.jp">jiandong-li@hiroshima-u.ac.jp</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-primary" id="sponsors">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mx-auto text-center">
+                <h2 class="section-heading text-white">Co-Sponsorships</h2>
+                <p></p>
+
+                <p class="mb-2"
+                   style="padding: 10px;background-color: transparent; width: 200px;margin-left: auto; margin-right: auto;">
+                    <a href="https://www.hiroshima-u.ac.jp/"><img alt="Hiroshima University" src="img/logos/hu.png"
+                                                                  width="200"></a>
+                </p>
+
+                <p class="mb-2"
+                   style="padding: 10px;background-color: transparent; width: 200px;margin-left: auto; margin-right: auto;">
+                    <a href="https://www.reaj.jp/"><img alt="Reliability Engineering Association of Japan (REAJ)"
+                                                        src="img/logos/REAJ.png"
+                                                        width="300"></a>
+                </p>
+
+                <p class="mb-2"
+                   style="padding: 10px;background-color: transparent; width: 200px;margin-left: auto; margin-right: auto;">
+                    <a href="https://www.ieice.org/ess/r/"><img
+                            alt="The IEICE Engineering Sciences Society Technical Committee on Reliability"
+                            src="img/logos/IEICE.png"
+                            width="300"></a>
+                </p>
+
+                <p class="mb-2"
+                   style="padding: 10px;background-color: transparent; width: 200px;margin-left: auto; margin-right: auto;">
+                    <a href="https://www.ieice.org/iss/dc/jpn/"><img
+                            alt="The IEICE Information and Systems Society Technical Committee on Dependable Computing"
+                            src="img/logos/ISS.png"
+                            width="460"></a>
+                </p>
+
+
+                <!-- <p class="text-white mb-2">
+                More to be announced.</p> -->
+
+                <!-- <hr class="my-4">
+
+                <h2 class="section-heading text-white">Awards</h2>
+
+                <p class="mb-2 text-white" style="padding: 10px;background-color: transparent; width: 500px;margin-left: auto; margin-right: auto;">
+                 <img src="img/award-1.jpg" width="500">
+                 Best paper award: "Assessing the Relation Between Hazards and Variability in Automotive Systems" by Xiaoyi Zhang, Paolo Arcaini and Fuyuki Ishikawa.
+               </p>
+
+               <p class="mb-2 text-white" style="padding: 10px;background-color: transparent; width: 500px;margin-left: auto; margin-right: auto;">
+                 <img src="img/award-2.jpg" width="500">
+                 Leadership award: Zuohua Ding for his outstanding service as ICECCS 2019 General Co-Chair. Note: award received by his students.
+               </p>
+
+               <p class="mb-2 text-white" style="padding: 10px;background-color: transparent; width: 500px;margin-left: auto; margin-right: auto;">
+                 <img src="img/award-3.jpg" width="500">
+                 Leadership award: Zhe Hou for his outstanding service as ICECCS 2019 Web and Publicity Co-Chair.
+               </p> -->
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="js/creative.min.js"></script>
+<script src="vendor/axios/axios.min.js"></script>
+<script src="js/registration.js"></script>
+
+</body>
+
+
+<!-- Mirrored from formal-analysis.com/iceccs/2020/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Feb 2021 07:44:57 GMT -->
+</html>
